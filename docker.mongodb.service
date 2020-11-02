@@ -1,0 +1,12 @@
+[Unit]
+Description=Dockerized_mongodb
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/usr/bin/docker run -td -p 27017:27017 --name web_db -v /backups:/backups web_db
+
+[Install]
+WantedBy=multi-user.target

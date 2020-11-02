@@ -1,0 +1,1 @@
+0 5 * * * /bin/backup_mongo.sh
