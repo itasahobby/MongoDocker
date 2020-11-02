@@ -7,11 +7,16 @@ NAME_TAKEN=$(docker image ls | grep $CONTAINER_NAME | wc -l)
 
 if [ $NAME_TAKEN -gt 0 ] 
 then
-  echo "Image name already taken";
+  echo "Image name already taken, rebuilding...";
+  docker image rm "$CONTAINER_NAME"
+
 else
   echo "Building...";
-  docker build -t "$CONTAINER_NAME" "$DIR/docker"
-  cp "$DIR/dockermongodb.service" "/etc/systemd/system/$SERVICE_NAME.service"
-  chmod 644 "/etc/systemd/system/$SERVICE_NAME.service"
-  systemctl start "$SERVICE_NAME"
 fi
+
+docker build -t "$CONTAINER_NAME" "$DIR/docker"
+cp "$DIR/dockermongodb.service" "/etc/systemd/system/$SERVICE_NAME.service"
+chmod 644 "/etc/systemd/system/$SERVICE_NAME.service"
+systemctl start "$SERVICE_NAME"
+echo "Reloading units..."
+systemctl daemon-reload
