@@ -6,7 +6,7 @@ Requires=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStart=/bin/run_mongodb.sh
+ExecStart=/bin/run_mongodb.sh web_db
 ExecStop=/usr/bin/docker container stop web_db
 
 [Install]
